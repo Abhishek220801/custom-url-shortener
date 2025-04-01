@@ -10,6 +10,10 @@ const urlSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    referenceName: {
+        type: String,
+        required: true // Make sure it's required to always have a value
+    },
     visitHistory: [{timestamp: {type: Number}}],
 },
     {timestamps: true}
