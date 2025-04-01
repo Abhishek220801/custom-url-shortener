@@ -10,15 +10,8 @@ const URL = require('./models/url')
 const app = express();
 const PORT = process.env.PORT || 8001;
 
-
-// Vercel-optimized MongoDB connection
-let isDbConnected = false;
-const connectDB = async () => {
-  if (!isDbConnected) {
-    await connectMongoDb(process.env.MONGODB_URI);
-    isDbConnected = true;
-  }
-};
+connectMongoDb('mongodb://localhost:27017/short-url')
+    .then(()=>console.log('MongoDB connected'));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -57,17 +50,4 @@ app.get('/:shortId', async (req,res)=>{
     res.redirect(entry.redirectUrl);
 })
 
-// Health check endpoint
-app.get('/ping', (req, res) => res.send('pong'));
-
-// Warmup endpoint for Vercel
-app.get('/_warmup', async (req, res) => {
-  await connectDB();
-  res.send('Warmed up');
-});
-
-
 app.listen(PORT, ()=>console.log(`Server started at PORT: ${PORT}`))
-
-// Export as Vercel serverless function
-module.exports = app;
