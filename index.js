@@ -2,18 +2,23 @@ const express = require('express');
 const {connectMongoDb} = require('./connectDb')
 const UrlRouter = require('./routes/url')
 const ejs = require('ejs');
+require('dotenv').config();
 const path = require('path')
 const staticRouter = require('./routes/staticRouter')
 const URL = require('./models/url')
 
 const app = express();
-const PORT = 8001;
+const PORT = process.env.PORT || 8001;
 
-connectMongoDb('mongodb://localhost:27017/short-url')
+
+connectMongoDb(process.env.MONGODB_URI)
     .then(()=>console.log(`MongoDB connected`));
 
 app.set('view engine', 'ejs');
-app.set('views', path.resolve(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
+
+// Serve static files from public directory
+app.use(express.static(path.join(__dirname, './')));
 
 app.use(express.json()); //for JSON data
 app.use(express.urlencoded({extended: false})); //for form data
