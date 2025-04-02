@@ -16,7 +16,8 @@ async function handleGenerateNewShortURL(req, res) {
             shortId,
             redirectUrl: url,
             referenceName: referenceName || "Unknown", // Default value if not provided
-            visitHistory: []
+            visitHistory: [],
+            createdBy: req.user._id,
         });
 
         // Fetch all URLs from the database
@@ -27,7 +28,6 @@ async function handleGenerateNewShortURL(req, res) {
         return res.status(500).json({ error: "Internal server error" });
     }
 }
-
 
 async function handleGetAnalytics(req,res){
     const shortId = req.params.shortId;

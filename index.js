@@ -1,11 +1,15 @@
 const express = require('express');
 const {connectMongoDb} = require('./connectDb')
-const UrlRouter = require('./routes/url')
+const cookieParser = require('cookie-parser');
 const ejs = require('ejs');
 require('dotenv').config();
 const path = require('path')
-const staticRouter = require('./routes/staticRouter')
 const URL = require('./models/url')
+const {restrictToLoggedInUserOnly, checkAuth} = require('./middlewares/auth')
+
+const UrlRouter = require('./routes/url')
+const staticRouter = require('./routes/staticRouter')
+const userRouter = require('./routes/user')
 
 const app = express();
 const PORT = process.env.PORT || 8001;
@@ -21,16 +25,18 @@ app.use(express.static(path.join(__dirname, './')));
 
 app.use(express.json()); //for JSON data
 app.use(express.urlencoded({extended: false})); //for form data
+app.use(cookieParser()); //for cookie
 
-app.use('/url', UrlRouter);
-app.use('/', staticRouter);
+app.use('/url', restrictToLoggedInUserOnly, UrlRouter);
+app.use('/user', userRouter)
+app.use('/', checkAuth, staticRouter);
 
-app.get('/test', async (req,res)=>{
-    const allUrls = await URL.find({});
-    return res.render('home', {
-        urls: allUrls
-    })
-})
+// app.get('/test', async (req,res)=>{
+//     const allUrls = await URL.find({});
+//     return res.render('home', {
+//         urls: allUrls
+//     })
+// })
 
 app.get('/:shortId', async (req,res)=>{
     const shortId = req.params.shortId;

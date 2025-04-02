@@ -20,6 +20,15 @@
             min-height: 100vh;
             padding: 20px;
         }
+        .logo {
+            width: 150px;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            position: absolute;
+            left: 1vh;
+            top: -50px;
+        }
         .container {
             background: white;
             padding: 20px;
@@ -81,6 +90,10 @@
     </style>
 </head>
 <body>
+    <header>
+        <img src="../assets/logo.png" alt="URL Shortener Logo" class="logo">
+    </header>
+    <h5 style="position: absolute; top: 8px; right: 1vh;"><a href="/login">Logout (<%=userName%>)</a></h5>
     <div class="container">
         <h1>URL Shortener</h1>
         <p>Enter Your Original URL</p>
@@ -97,8 +110,8 @@
                 <thead>
                     <tr>
                         <th>S. No</th>
-                        <th>Short ID</th>
                         <th>Reference Name</th>
+                        <th>Shortened URL</th>
                         <th>Clicks</th>
                     </tr>
                 </thead>
@@ -106,12 +119,12 @@
                     <% urls.forEach((url, index) => { %>
                     <tr>
                         <td><%= index + 1 %></td>
+                        <td><%= url.referenceName %></td>
                         <td>
                             <a href="http://localhost:8001/<%= url.shortId %>" target="_blank">
                                 http://localhost:8001/<%= url.shortId %>
                             </a>
                         </td>
-                        <td><%= url.referenceName %></td>
                         <td><%= url.visitHistory.length %></td>
                     </tr>
                     <% }) %>
