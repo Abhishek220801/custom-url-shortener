@@ -20,3 +20,10 @@ Database: MongoDB
 Authentication: Sessions & Cookies
 
 Templating Engine: EJS
+
+## Future improvement plans 
+Implementing OAuth login (Google, GitHub)
+ 
+Adding QR code generation for shortened URLs
+  
+Improving UI using Tailwind CSS most probably
