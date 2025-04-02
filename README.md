@@ -22,7 +22,7 @@ Authentication: Sessions & Cookies
 Templating Engine: EJS
 
 ## Future improvement plans 
-Implementing OAuth login (Google, GitHub)
+Implementing OAuth login (Google, GitHub) 
  
 Adding QR code generation for shortened URLs
   
