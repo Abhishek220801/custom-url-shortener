@@ -22,8 +22,8 @@ Authentication: Sessions & Cookies
 Templating Engine: EJS
 
 ## Future improvement plans 
-Implementing OAuth login (Google, GitHub) 
+🟠Implementing OAuth login (Google, GitHub) 
  
-Adding QR code generation for shortened URLs
+🟠Adding QR code generation for shortened URLs
   
-Improving UI using Tailwind CSS most probably
+🟠Improving UI using Tailwind CSS most probably
