@@ -7,10 +7,9 @@ const router = express.Router();
 router.get('/', async (req,res)=>{
     if(!req.user) return res.redirect('/login')
     const allUrls = await URL.find({createdBy: req.user._id});
-    // console.log(req.user);
     return res.render('home',{
         urls: allUrls,
-        userName: req.user.name
+        userName: req.user.email
     })
 })
 
@@ -19,6 +18,7 @@ router.get('/signup', (req,res)=>{
 })
 
 router.get('/login', (req,res)=>{
+    // console.log(req.user.email)
     return res.render('login')
 })
 

@@ -10,10 +10,8 @@ async function handleUserSignup(req,res){
         return res.render('signup', {error: 'Email already in use'})
     }
     const newUser = await User.create({name,email,password});
-    
-    const sessionId = uuidv4();
-    setUser(sessionId, newUser);
-    res.cookie('uid', sessionId);
+    const token = setUser(newUser);
+    res.cookie('uid', token);
 
     return res.redirect('/');
 }
@@ -21,13 +19,13 @@ async function handleUserSignup(req,res){
 async function handleUserLogin(req,res){
     const { email, password } = req.body;
     const user = await User.findOne({email,password});
-    console.log(user);
+    // console.log(user);
     if(!user) return res.render('login',{
         error: 'Invalid username or password'
     })
-    const sessionId = uuidv4();
-    setUser(sessionId, user);
-    res.cookie('uid', sessionId);
+    // const sessionId = uuidv4();
+    const token = setUser(user);
+    res.cookie('uid', token);
     return res.redirect('/');
 }
 
